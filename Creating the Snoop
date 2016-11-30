@@ -1,0 +1,22 @@
+###################################################################
+#Project meeting 1
+###################################################################
+
+
+list.files()
+df <- read.csv("Julian_Final_Form.csv", header = T, skip = 2)
+df1 <- ddply(df, .(State), .fun = summarize, Year = Year, Male, Female, Health.Exp)
+str(df1)
+length(unique(df1$State))
+#Drop Andaman and Nicobar & Dadra NH & Daman and Diu & Lakshadweep & Chandigarh and 2003
+df1 <- subset(df1, select = -Year==2003)
+df2 <- subset(df1, ! Year %in% c("2003"))
+df3 <- subset(df2, ! State %in% c("Andaman & Nicobar Islands",
+                                  "Dadra & Nagar Haveli",
+                                  "Daman & Diu", "Lakshadweep",
+                                  "Chandigarh"))
+snoop <- df3
+
+names(snoop) <- c("state", "year","male.imr", "fem.imr", "health.exp" )
+str(snoop)
+snoop <- as.data.frame(snoop)
